@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		944591661D7FEA2800CE9038 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9445913F1D7FEA1700CE9038 /* RxSwift.framework */; };
+		9445916E1D7FEAA700CE9038 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9445916D1D7FEAA700CE9038 /* AppDelegate.swift */; };
+		944591701D7FEAA700CE9038 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9445916F1D7FEAA700CE9038 /* ViewController.swift */; };
+		944591731D7FEAA700CE9038 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 944591711D7FEAA700CE9038 /* Main.storyboard */; };
+		944591761D7FEAA700CE9038 /* RxDobbyExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 944591741D7FEAA700CE9038 /* RxDobbyExample.xcdatamodeld */; };
+		944591781D7FEAA700CE9038 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 944591771D7FEAA700CE9038 /* Assets.xcassets */; };
+		9445917B1D7FEAA700CE9038 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 944591791D7FEAA700CE9038 /* LaunchScreen.storyboard */; };
+		9445919C1D7FEAE300CE9038 /* RxDobby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E4DACF1D7FE8630092440F /* RxDobby.framework */; };
+		9445919D1D7FEAE800CE9038 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9445913F1D7FEA1700CE9038 /* RxSwift.framework */; };
 		94E4DAD31D7FE8630092440F /* RxDobby.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E4DAD21D7FE8630092440F /* RxDobby.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94E4DADA1D7FE8630092440F /* RxDobby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E4DACF1D7FE8630092440F /* RxDobby.framework */; };
 		94E4DADF1D7FE8630092440F /* RxDobbyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E4DADE1D7FE8630092440F /* RxDobbyTests.swift */; };
@@ -165,6 +173,14 @@
 
 /* Begin PBXFileReference section */
 		944591271D7FEA1600CE9038 /* Rx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Rx.xcodeproj; path = RxSwift/Rx.xcodeproj; sourceTree = "<group>"; };
+		9445916B1D7FEAA700CE9038 /* RxDobbyExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RxDobbyExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9445916D1D7FEAA700CE9038 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9445916F1D7FEAA700CE9038 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		944591721D7FEAA700CE9038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		944591751D7FEAA700CE9038 /* RxDobbyExample.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RxDobbyExample.xcdatamodel; sourceTree = "<group>"; };
+		944591771D7FEAA700CE9038 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9445917A1D7FEAA700CE9038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9445917C1D7FEAA700CE9038 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94E4DACF1D7FE8630092440F /* RxDobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxDobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94E4DAD21D7FE8630092440F /* RxDobby.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxDobby.h; sourceTree = "<group>"; };
 		94E4DAD41D7FE8630092440F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -174,6 +190,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		944591681D7FEAA700CE9038 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9445919D1D7FEAE800CE9038 /* RxSwift.framework in Frameworks */,
+				9445919C1D7FEAE300CE9038 /* RxDobby.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		94E4DACB1D7FE8630092440F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -220,12 +245,27 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9445916C1D7FEAA700CE9038 /* RxDobbyExample */ = {
+			isa = PBXGroup;
+			children = (
+				9445916D1D7FEAA700CE9038 /* AppDelegate.swift */,
+				9445916F1D7FEAA700CE9038 /* ViewController.swift */,
+				944591711D7FEAA700CE9038 /* Main.storyboard */,
+				944591771D7FEAA700CE9038 /* Assets.xcassets */,
+				944591791D7FEAA700CE9038 /* LaunchScreen.storyboard */,
+				9445917C1D7FEAA700CE9038 /* Info.plist */,
+				944591741D7FEAA700CE9038 /* RxDobbyExample.xcdatamodeld */,
+			);
+			path = RxDobbyExample;
+			sourceTree = "<group>";
+		};
 		94E4DAC51D7FE8630092440F = {
 			isa = PBXGroup;
 			children = (
 				944591271D7FEA1600CE9038 /* Rx.xcodeproj */,
 				94E4DAD11D7FE8630092440F /* RxDobby */,
 				94E4DADD1D7FE8630092440F /* RxDobbyTests */,
+				9445916C1D7FEAA700CE9038 /* RxDobbyExample */,
 				94E4DAD01D7FE8630092440F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -235,6 +275,7 @@
 			children = (
 				94E4DACF1D7FE8630092440F /* RxDobby.framework */,
 				94E4DAD91D7FE8630092440F /* RxDobbyTests.xctest */,
+				9445916B1D7FEAA700CE9038 /* RxDobbyExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,6 +312,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		9445916A1D7FEAA700CE9038 /* RxDobbyExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 944591931D7FEAA700CE9038 /* Build configuration list for PBXNativeTarget "RxDobbyExample" */;
+			buildPhases = (
+				944591671D7FEAA700CE9038 /* Sources */,
+				944591681D7FEAA700CE9038 /* Frameworks */,
+				944591691D7FEAA700CE9038 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RxDobbyExample;
+			productName = RxDobbyExample;
+			productReference = 9445916B1D7FEAA700CE9038 /* RxDobbyExample.app */;
+			productType = "com.apple.product-type.application";
+		};
 		94E4DACE1D7FE8630092440F /* RxDobby */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 94E4DAE31D7FE8630092440F /* Build configuration list for PBXNativeTarget "RxDobby" */;
@@ -317,6 +375,9 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = kimyoungjin;
 				TargetAttributes = {
+					9445916A1D7FEAA700CE9038 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
 					94E4DACE1D7FE8630092440F = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
@@ -331,6 +392,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 94E4DAC51D7FE8630092440F;
 			productRefGroup = 94E4DAD01D7FE8630092440F /* Products */;
@@ -345,6 +407,7 @@
 			targets = (
 				94E4DACE1D7FE8630092440F /* RxDobby */,
 				94E4DAD81D7FE8630092440F /* RxDobbyTests */,
+				9445916A1D7FEAA700CE9038 /* RxDobbyExample */,
 			);
 		};
 /* End PBXProject section */
@@ -493,6 +556,16 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		944591691D7FEAA700CE9038 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9445917B1D7FEAA700CE9038 /* LaunchScreen.storyboard in Resources */,
+				944591781D7FEAA700CE9038 /* Assets.xcassets in Resources */,
+				944591731D7FEAA700CE9038 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		94E4DACD1D7FE8630092440F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -510,6 +583,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		944591671D7FEAA700CE9038 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				944591761D7FEAA700CE9038 /* RxDobbyExample.xcdatamodeld in Sources */,
+				944591701D7FEAA700CE9038 /* ViewController.swift in Sources */,
+				9445916E1D7FEAA700CE9038 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		94E4DACA1D7FE8630092440F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -535,7 +618,48 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		944591711D7FEAA700CE9038 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				944591721D7FEAA700CE9038 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		944591791D7FEAA700CE9038 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9445917A1D7FEAA700CE9038 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		944591941D7FEAA700CE9038 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RxDobbyExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kimyoungjin.RxDobbyExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		944591951D7FEAA700CE9038 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RxDobbyExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kimyoungjin.RxDobbyExample;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		94E4DAE11D7FE8630092440F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -684,6 +808,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		944591931D7FEAA700CE9038 /* Build configuration list for PBXNativeTarget "RxDobbyExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				944591941D7FEAA700CE9038 /* Debug */,
+				944591951D7FEAA700CE9038 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		94E4DAC91D7FE8630092440F /* Build configuration list for PBXProject "RxDobby" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -712,6 +844,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		944591741D7FEAA700CE9038 /* RxDobbyExample.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				944591751D7FEAA700CE9038 /* RxDobbyExample.xcdatamodel */,
+			);
+			currentVersion = 944591751D7FEAA700CE9038 /* RxDobbyExample.xcdatamodel */;
+			path = RxDobbyExample.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 94E4DAC61D7FE8630092440F /* Project object */;
 }
