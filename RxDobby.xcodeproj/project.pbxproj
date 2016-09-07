@@ -16,6 +16,14 @@
 		9445917B1D7FEAA700CE9038 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 944591791D7FEAA700CE9038 /* LaunchScreen.storyboard */; };
 		9445919C1D7FEAE300CE9038 /* RxDobby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E4DACF1D7FE8630092440F /* RxDobby.framework */; };
 		9445919D1D7FEAE800CE9038 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9445913F1D7FEA1700CE9038 /* RxSwift.framework */; };
+		944591A01D7FEC6300CE9038 /* delay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9445919F1D7FEC6300CE9038 /* delay.swift */; };
+		944591A21D7FECC100CE9038 /* DManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944591A11D7FECC100CE9038 /* DManagedObject.swift */; };
+		944591AC1D7FF21300CE9038 /* DConstraintsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944591A61D7FF21300CE9038 /* DConstraintsBuilder.swift */; };
+		944591B11D7FF21300CE9038 /* DIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944591AB1D7FF21300CE9038 /* DIActivityIndicatorView.swift */; };
+		944591B71D7FF2A600CE9038 /* DSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944591B31D7FF2A600CE9038 /* DSegue.swift */; };
+		944591B81D7FF2A600CE9038 /* PopupTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944591B41D7FF2A600CE9038 /* PopupTransitionDelegate.swift */; };
+		944591B91D7FF2A600CE9038 /* RevealLeftHiddenViewSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944591B51D7FF2A600CE9038 /* RevealLeftHiddenViewSegue.swift */; };
+		944591BA1D7FF2A600CE9038 /* SlideOverTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 944591B61D7FF2A600CE9038 /* SlideOverTransitionDelegate.swift */; };
 		94E4DAD31D7FE8630092440F /* RxDobby.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E4DAD21D7FE8630092440F /* RxDobby.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94E4DADA1D7FE8630092440F /* RxDobby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E4DACF1D7FE8630092440F /* RxDobby.framework */; };
 		94E4DADF1D7FE8630092440F /* RxDobbyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E4DADE1D7FE8630092440F /* RxDobbyTests.swift */; };
@@ -181,6 +189,14 @@
 		944591771D7FEAA700CE9038 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9445917A1D7FEAA700CE9038 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9445917C1D7FEAA700CE9038 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9445919F1D7FEC6300CE9038 /* delay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = delay.swift; sourceTree = "<group>"; };
+		944591A11D7FECC100CE9038 /* DManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DManagedObject.swift; sourceTree = "<group>"; };
+		944591A61D7FF21300CE9038 /* DConstraintsBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DConstraintsBuilder.swift; sourceTree = "<group>"; };
+		944591AB1D7FF21300CE9038 /* DIActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DIActivityIndicatorView.swift; sourceTree = "<group>"; };
+		944591B31D7FF2A600CE9038 /* DSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DSegue.swift; sourceTree = "<group>"; };
+		944591B41D7FF2A600CE9038 /* PopupTransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupTransitionDelegate.swift; sourceTree = "<group>"; };
+		944591B51D7FF2A600CE9038 /* RevealLeftHiddenViewSegue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevealLeftHiddenViewSegue.swift; sourceTree = "<group>"; };
+		944591B61D7FF2A600CE9038 /* SlideOverTransitionDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideOverTransitionDelegate.swift; sourceTree = "<group>"; };
 		94E4DACF1D7FE8630092440F /* RxDobby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxDobby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94E4DAD21D7FE8630092440F /* RxDobby.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxDobby.h; sourceTree = "<group>"; };
 		94E4DAD41D7FE8630092440F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -259,6 +275,34 @@
 			path = RxDobbyExample;
 			sourceTree = "<group>";
 		};
+		9445919E1D7FEC5A00CE9038 /* function */ = {
+			isa = PBXGroup;
+			children = (
+				9445919F1D7FEC6300CE9038 /* delay.swift */,
+			);
+			path = function;
+			sourceTree = "<group>";
+		};
+		944591A51D7FED3000CE9038 /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				944591A61D7FF21300CE9038 /* DConstraintsBuilder.swift */,
+				944591AB1D7FF21300CE9038 /* DIActivityIndicatorView.swift */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		944591B21D7FF28100CE9038 /* segue */ = {
+			isa = PBXGroup;
+			children = (
+				944591B31D7FF2A600CE9038 /* DSegue.swift */,
+				944591B41D7FF2A600CE9038 /* PopupTransitionDelegate.swift */,
+				944591B51D7FF2A600CE9038 /* RevealLeftHiddenViewSegue.swift */,
+				944591B61D7FF2A600CE9038 /* SlideOverTransitionDelegate.swift */,
+			);
+			path = segue;
+			sourceTree = "<group>";
+		};
 		94E4DAC51D7FE8630092440F = {
 			isa = PBXGroup;
 			children = (
@@ -283,6 +327,10 @@
 		94E4DAD11D7FE8630092440F /* RxDobby */ = {
 			isa = PBXGroup;
 			children = (
+				9445919E1D7FEC5A00CE9038 /* function */,
+				944591B21D7FF28100CE9038 /* segue */,
+				944591A51D7FED3000CE9038 /* ui */,
+				944591A11D7FECC100CE9038 /* DManagedObject.swift */,
 				94E4DAD21D7FE8630092440F /* RxDobby.h */,
 				94E4DAD41D7FE8630092440F /* Info.plist */,
 			);
@@ -597,6 +645,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				944591B81D7FF2A600CE9038 /* PopupTransitionDelegate.swift in Sources */,
+				944591B11D7FF21300CE9038 /* DIActivityIndicatorView.swift in Sources */,
+				944591A01D7FEC6300CE9038 /* delay.swift in Sources */,
+				944591AC1D7FF21300CE9038 /* DConstraintsBuilder.swift in Sources */,
+				944591A21D7FECC100CE9038 /* DManagedObject.swift in Sources */,
+				944591BA1D7FF2A600CE9038 /* SlideOverTransitionDelegate.swift in Sources */,
+				944591B91D7FF2A600CE9038 /* RevealLeftHiddenViewSegue.swift in Sources */,
+				944591B71D7FF2A600CE9038 /* DSegue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +810,7 @@
 		94E4DAE41D7FE8630092440F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -765,12 +822,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kimyoungjin.RxDobby;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		94E4DAE51D7FE8630092440F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
