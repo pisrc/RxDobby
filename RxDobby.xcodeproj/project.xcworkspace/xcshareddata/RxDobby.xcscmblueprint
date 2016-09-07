@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C3B6DD370901AA12672147317A295C8452564FB0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C3B6DD370901AA12672147317A295C8452564FB0" : 0,
+    "8B123162C394A0A0A138779108E4C59DD771865A" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "555F7E89-1BC7-4F13-B4AB-93DA340A1B2C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C3B6DD370901AA12672147317A295C8452564FB0" : "RxDobby\/",
+    "8B123162C394A0A0A138779108E4C59DD771865A" : "RxDobby\/RxSwift\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "RxDobby",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "RxDobby.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ReactiveX\/RxSwift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8B123162C394A0A0A138779108E4C59DD771865A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:pisrc\/RxDobby.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3B6DD370901AA12672147317A295C8452564FB0"
+    }
+  ]
+}
