@@ -9,6 +9,7 @@
 import UIKit
 import RxSwift
 import RxDobby
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var area1: UIView!
