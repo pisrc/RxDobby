@@ -9,18 +9,18 @@
 import Foundation
 
 protocol RevealPresentationPositionDelegate {
-    func positionForPresentedView(containerRect: CGRect, presentedSize: CGSize) -> CGPoint
-    func boundaryCollisionCheck(presented: CGRect, presenting: CGRect, container: CGRect, delta :CGPoint) -> Bool
+    func positionForPresentedView(_ containerRect: CGRect, presentedSize: CGSize) -> CGPoint
+    func boundaryCollisionCheck(_ presented: CGRect, presenting: CGRect, container: CGRect, delta :CGPoint) -> Bool
 }
 
 protocol AnimatedRevealTransitioningPositionDelegate {
-    func finalPositionForPresentingView(containerRect: CGRect, presentedRect: CGRect) -> CGPoint
+    func finalPositionForPresentingView(_ containerRect: CGRect, presentedRect: CGRect) -> CGPoint
 }
 
 
 final class RevealLeftHiddenViewSegue: UIStoryboardSegue {
     
-    private var transitionDelegate: UIViewControllerTransitioningDelegate?
+    fileprivate var transitionDelegate: UIViewControllerTransitioningDelegate?
     
     var direction: DSegueDirection?
     var sizeHandler: SizeHandlerFunc?
@@ -30,18 +30,18 @@ final class RevealLeftHiddenViewSegue: UIStoryboardSegue {
             return
         }
         switch direction {
-        case .LeftToRight:
+        case .leftToRight:
             self.transitionDelegate = RevealTransitionDelegate()
-        case .RightToLeft:
+        case .rightToLeft:
             //self.transitionDelegate = RightToLeftSlideForHiddenTransitionDelegate()
             print("later")
         }
         if var trans = self.transitionDelegate as? SizeHandlerHasableTransitionDelgate {
             trans.sizeHandler = sizeHandler
         }
-        destinationViewController.modalPresentationStyle = .Custom
-        destinationViewController.transitioningDelegate = self.transitionDelegate
-        sourceViewController.presentViewController(destinationViewController, animated: true, completion: nil)
+        destination.modalPresentationStyle = .custom
+        destination.transitioningDelegate = self.transitionDelegate
+        source.present(destination, animated: true, completion: nil)
     }
 }
 
@@ -50,23 +50,23 @@ extension RevealLeftHiddenViewSegue {
     // MARK: - 왼쪽에서 시작하는 기존 container view를 slide로 밀면서 나타나는 transition
     final class RevealTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate, SizeHandlerHasableTransitionDelgate, RevealPresentationPositionDelegate, AnimatedRevealTransitioningPositionDelegate {
         
-        var sizeHandler: ((parentSize: CGSize) -> CGSize)? // SizeHandlerHasableTransitionDelgate
+        var sizeHandler: ((_ parentSize: CGSize) -> CGSize)? // SizeHandlerHasableTransitionDelgate
         
-        func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-            let presentationController = RevealPresentationController(presentedViewController: presented, presentingViewController: presenting)
+        func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+            let presentationController = RevealPresentationController(presentedViewController: presented, presenting: presenting)
             presentationController.sizeHandler = self.sizeHandler
             presentationController.positionDelegate = self
             return presentationController
         }
         
-        func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
             let animationController = AnimatedRevealTransitioning()
             animationController.isPresentation = true
             animationController.positionDelegate = self
             return animationController
         }
         
-        func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
             let animationController = AnimatedRevealTransitioning()
             animationController.isPresentation = false
             animationController.positionDelegate = self
@@ -74,13 +74,13 @@ extension RevealLeftHiddenViewSegue {
         }
         
         // MARK: - RevealPresentationPositionDelegate
-        func positionForPresentedView(containerRect: CGRect, presentedSize: CGSize) -> CGPoint {
-            return CGPointMake(0, 0)    // 보통 메뉴는 좌측 상단이 원점
+        func positionForPresentedView(_ containerRect: CGRect, presentedSize: CGSize) -> CGPoint {
+            return CGPoint(x: 0, y: 0)    // 보통 메뉴는 좌측 상단이 원점
         }
-        func boundaryCollisionCheck(presented: CGRect, presenting: CGRect, container: CGRect, delta :CGPoint) -> Bool {
+        func boundaryCollisionCheck(_ presented: CGRect, presenting: CGRect, container: CGRect, delta :CGPoint) -> Bool {
             var size = presented.size
             if let handler = self.sizeHandler {
-                size = handler(parentSize: container.size)
+                size = handler(container.size)
             }
             
             if size.width < presenting.origin.x + delta.x {
@@ -93,11 +93,11 @@ extension RevealLeftHiddenViewSegue {
         }
         
         // MARK: - AnimatedRevealTransitioningPositionDelegate
-        func finalPositionForPresentingView(containerRect: CGRect, presentedRect: CGRect) -> CGPoint {
+        func finalPositionForPresentingView(_ containerRect: CGRect, presentedRect: CGRect) -> CGPoint {
             // 보통 기존 contents 영역의 view 는 좌측 메뉴가 열렸을때 좌측메뉴 너비의 x 좌표에 위치함
             if let handler = self.sizeHandler {
-                let size = handler(parentSize: containerRect.size)
-                let pos = CGPointMake(size.width, 0)
+                let size = handler(containerRect.size)
+                let pos = CGPoint(x: size.width, y: 0)
                 return pos
             }
             return containerRect.origin
@@ -109,10 +109,10 @@ extension RevealLeftHiddenViewSegue {
         var chromeView: UIView = UIView()   // 배경을 반투명하게 가리는 검정 배경
         var orgPresentingSuperview: UIView?
         var positionDelegate: RevealPresentationPositionDelegate?
-        var sizeHandler: ((parentSize: CGSize) -> CGSize)?
+        var sizeHandler: ((_ parentSize: CGSize) -> CGSize)?
         
-        override init(presentedViewController: UIViewController, presentingViewController: UIViewController) {
-            super.init(presentedViewController: presentedViewController, presentingViewController: presentingViewController)
+        override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+            super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
             chromeView.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
             chromeView.alpha = 0.0
             chromeView.addGestureRecognizer(
@@ -121,42 +121,42 @@ extension RevealLeftHiddenViewSegue {
                 UIPanGestureRecognizer(target: self, action: #selector(RevealPresentationController.chromeViewPanned(_:))))
         }
         
-        func chromeViewTapped(gesture: UIGestureRecognizer) {
-            if(gesture.state == UIGestureRecognizerState.Ended) {
-                presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+        func chromeViewTapped(_ gesture: UIGestureRecognizer) {
+            if(gesture.state == UIGestureRecognizerState.ended) {
+                presentingViewController.dismiss(animated: true, completion: nil)
             }
         }
         
-        var oldTransform = CGAffineTransformIdentity
-        func chromeViewPanned(recognizer: UIPanGestureRecognizer) {
+        var oldTransform = CGAffineTransform.identity
+        func chromeViewPanned(_ recognizer: UIPanGestureRecognizer) {
             let presentingView = self.presentingViewController.view
             let presentedView = self.presentedViewController.view
-            let leftToRight = (recognizer.velocityInView(presentingView).x > 0)
+            let leftToRight = (recognizer.velocity(in: presentingView).x > 0)
             switch recognizer.state {
-            case .Began:
-                oldTransform = presentingView.transform
-            case .Changed:
-                let deltaX = recognizer.translationInView(presentingView).x
+            case .began:
+                oldTransform = (presentingView?.transform)!
+            case .changed:
+                let deltaX = recognizer.translation(in: presentingView).x
                 if let positionDelegate = self.positionDelegate {
-                    let collision = positionDelegate.boundaryCollisionCheck(presentedView.frame, presenting: presentingView.frame, container: containerView!.frame, delta: CGPointMake(deltaX, 0))
+                    let collision = positionDelegate.boundaryCollisionCheck((presentedView?.frame)!, presenting: (presentingView?.frame)!, container: containerView!.frame, delta: CGPoint(x: deltaX, y: 0))
                     if collision {
                         break
                     }
                 }
-                presentingView.transform = CGAffineTransformMakeTranslation(presentingView.frame.origin.x + deltaX, 0)
-                recognizer.setTranslation(CGPointZero, inView: presentingView)
-            case .Ended:
+                presentingView?.transform = CGAffineTransform(translationX: (presentingView?.frame.origin.x)! + deltaX, y: 0)
+                recognizer.setTranslation(CGPoint.zero, in: presentingView)
+            case .ended:
                 if !leftToRight {
-                    presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+                    presentingViewController.dismiss(animated: true, completion: nil)
                 } else {
                     // 처음 위치로 되돌아감
-                    UIView.animateWithDuration(0.5,
+                    UIView.animate(withDuration: 0.5,
                         delay: 0,
                         usingSpringWithDamping: 1.0,
                         initialSpringVelocity: 0,
-                        options: .CurveEaseInOut,
+                        options: UIViewAnimationOptions(),
                         animations: {
-                            presentingView.transform = self.oldTransform
+                            presentingView?.transform = self.oldTransform
                         },
                         completion: nil)
                 }
@@ -179,7 +179,7 @@ extension RevealLeftHiddenViewSegue {
             presentingViewController.view.layer.shadowOpacity = 0.8
         }
         
-        override func dismissalTransitionDidEnd(completed: Bool) {
+        override func dismissalTransitionDidEnd(_ completed: Bool) {
             if !completed {
                 return
             }
@@ -187,22 +187,22 @@ extension RevealLeftHiddenViewSegue {
             presentingViewController.view.layer.shadowOpacity = 0.0
             chromeView.removeFromSuperview()
             presentingViewController.view.removeFromSuperview()
-            presentedView()?.removeFromSuperview()
+            presentedView?.removeFromSuperview()
             if let superview = self.orgPresentingSuperview {
                 superview.addSubview(presentingViewController.view)
             }
         }
         
         override func containerViewWillLayoutSubviews() {
-            self.containerView?.bringSubviewToFront(self.presentingViewController.view)
+            self.containerView?.bringSubview(toFront: self.presentingViewController.view)
         }
         
-        override func shouldPresentInFullscreen() -> Bool {
+        override var shouldPresentInFullscreen : Bool {
             return true
         }
         
-        override func adaptivePresentationStyle() -> UIModalPresentationStyle {
-            return UIModalPresentationStyle.FullScreen
+        override var adaptivePresentationStyle : UIModalPresentationStyle {
+            return UIModalPresentationStyle.fullScreen
         }
     }
     
@@ -210,35 +210,35 @@ extension RevealLeftHiddenViewSegue {
         var isPresentation = false
         var positionDelegate: AnimatedRevealTransitioningPositionDelegate?
         
-        func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+        func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
             return 0.5
         }
         
-        func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-            let containerView = transitionContext.containerView()
+        func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+            let containerView = transitionContext.containerView
             let screens: (from:UIViewController, to:UIViewController) = (
-                transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)!,
-                transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)!)
+                transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!,
+                transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!)
             
             let tedVC = self.isPresentation ? screens.to : screens.from
             let tingVC = self.isPresentation ? screens.from : screens.to
             
             var openTargetPosX:CGFloat = 0.0
-            if let positionDelegate = self.positionDelegate, let containerView = containerView {
+            if let positionDelegate = self.positionDelegate {
                 let pos = positionDelegate.finalPositionForPresentingView(containerView.frame, presentedRect: tedVC.view.frame)
                 openTargetPosX = pos.x
             }
             
-            UIView.animateWithDuration(transitionDuration(transitionContext),
+            UIView.animate(withDuration: transitionDuration(using: transitionContext),
                 delay: 0,
                 usingSpringWithDamping: 300.0,
                 initialSpringVelocity: 5.0,
-                options: UIViewAnimationOptions.AllowUserInteraction,
+                options: UIViewAnimationOptions.allowUserInteraction,
                 animations: { () -> Void in
                     if self.isPresentation {
-                        tingVC.view.transform = CGAffineTransformMakeTranslation(openTargetPosX, 0)
+                        tingVC.view.transform = CGAffineTransform(translationX: openTargetPosX, y: 0)
                     } else {
-                        tingVC.view.transform = CGAffineTransformIdentity
+                        tingVC.view.transform = CGAffineTransform.identity
                     }
                 },
                 completion: { (value: Bool) -> Void in

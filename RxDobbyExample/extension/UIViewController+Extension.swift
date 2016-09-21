@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     
     static weak var topViewController: UIViewController? {
-        if var topController = UIApplication.sharedApplication().keyWindow?.rootViewController {
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
                 topController = presentedViewController
             }
@@ -22,6 +22,6 @@ extension UIViewController {
     
     static func viewControllerFromStoryboard(name storyboardName: String, identifier: String) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        return storyboard.instantiateViewControllerWithIdentifier(identifier)
+        return storyboard.instantiateViewController(withIdentifier: identifier)
     }
 }

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         let ob = Observable<Int>.interval(1.0, scheduler: MainScheduler.instance).take(5)
-        DIActivityIndicatorView(centerAtView: area1, style: UIActivityIndicatorViewStyle.WhiteLarge).bindTo(ob)
+        DIActivityIndicatorView(centerAtView: area1, style: UIActivityIndicatorViewStyle.whiteLarge).bindTo(ob)
     }
 
     override func didReceiveMemoryWarning() {

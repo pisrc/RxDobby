@@ -1,20 +1,20 @@
 import UIKit
 
-public typealias SizeHandlerFunc = (parentSize: CGSize) -> CGSize
+public typealias SizeHandlerFunc = (_ parentSize: CGSize) -> CGSize
 
 public enum DSegueStyle {
-    case Show(animated: Bool)           // Push
-    case ShowDetail(animated: Bool)     // 화면 전환
-    case PresentModally(animated: Bool) // Modal
-    case PresentModallyWithDirection(DSegueDirection, sizeHandler: SizeHandlerFunc)
-    case PresentPopup(sizeHandler: SizeHandlerFunc)
-    case PresentAsPopover
-    case Embed(containerView: UIView?)
+    case show(animated: Bool)           // Push
+    case showDetail(animated: Bool)     // 화면 전환
+    case presentModally(animated: Bool) // Modal
+    case presentModallyWithDirection(DSegueDirection, sizeHandler: SizeHandlerFunc)
+    case presentPopup(sizeHandler: SizeHandlerFunc)
+    case presentAsPopover
+    case embed(containerView: UIView?)
 }
 
 public enum DSegueDirection {
-    case LeftToRight
-    case RightToLeft
+    case leftToRight
+    case rightToLeft
 }
 
 protocol AnimatedSettable {
@@ -22,16 +22,16 @@ protocol AnimatedSettable {
 }
 
 protocol PresentationControllerPositionDelegate {
-    func positionForPresentedView(containerRect: CGRect, presentedRect: CGRect) -> CGPoint
+    func positionForPresentedView(_ containerRect: CGRect, presentedRect: CGRect) -> CGPoint
 }
 
 protocol SizeHandlerHasableTransitionDelgate {
-    var sizeHandler: ((parentSize: CGSize) -> CGSize)? { get set }
+    var sizeHandler: ((_ parentSize: CGSize) -> CGSize)? { get set }
 }
 
 protocol AnimatedTransitioningPositionDelegate {
     // animation 시작 되기 전의 초기 위치를 결정해주세요. 해당 위치부터 presentation에 명시한 위치까지 애니메이션 됩니다.
-    func initialUpperViewPosition(finalFrameForUpper: CGRect) -> CGPoint
+    func initialUpperViewPosition(_ finalFrameForUpper: CGRect) -> CGPoint
 }
 
 
@@ -40,67 +40,67 @@ public struct DSegue {
     public typealias Destination = () -> UIViewController
     public typealias Style = () -> DSegueStyle
     public let source: UIViewController
-    private let destination: Destination
-    private let style: Style
+    fileprivate let destination: Destination
+    fileprivate let style: Style
     
-    private var transitionDelegate: UIViewControllerTransitioningDelegate?
+    fileprivate var transitionDelegate: UIViewControllerTransitioningDelegate?
     
-    public init(source: UIViewController, destination: Destination, style: Style) {
+    public init(source: UIViewController, destination: @escaping Destination, style: @escaping Style) {
         self.source = source
         self.destination = destination
         self.style = style
         
         // self.segue 를 만들어야 합니다.
         switch style() {
-        case .Show(_):
+        case .show(_):
             transitionDelegate = nil
-        case .ShowDetail(_):
+        case .showDetail(_):
             transitionDelegate = nil
-        case .PresentModally(_):
+        case .presentModally(_):
             transitionDelegate = nil
-        case .PresentModallyWithDirection(let direction, _) :
+        case .presentModallyWithDirection(let direction, _) :
             switch direction {
-            case .LeftToRight:
+            case .leftToRight:
                 transitionDelegate = LeftToRightSlideOverTransitionDelegate()
-            case .RightToLeft:
+            case .rightToLeft:
                 transitionDelegate = RightToLeftSlideOverTransitionDelegate()
             }
-        case .PresentPopup(_):
+        case .presentPopup(_):
             transitionDelegate = nil
-        case .PresentAsPopover:
+        case .presentAsPopover:
             transitionDelegate = nil
-        case .Embed(_):
+        case .embed(_):
             transitionDelegate = nil
         }
     }
     
-    private func getSegue(destination: UIViewController, style: DSegueStyle) -> UIStoryboardSegue? {
+    fileprivate func getSegue(_ destination: UIViewController, style: DSegueStyle) -> UIStoryboardSegue? {
         
         var segue: UIStoryboardSegue?
         
         switch style {
-        case .Show(let animated):
+        case .show(let animated):
             
             segue = ShowSegue(identifier: nil, source: source, destination: destination)
             if var segue = segue as? AnimatedSettable {
                 segue.animated = animated
             }
             
-        case .ShowDetail(let animated):
+        case .showDetail(let animated):
             
             segue = ShowDetailSegue(identifier: nil, source: source, destination: destination)
             if var segue = segue as? AnimatedSettable {
                 segue.animated = animated
             }
             
-        case .PresentModally(let animated):
+        case .presentModally(let animated):
             segue = PresentModallySegue(identifier: nil, source: source, destination: destination)
             if var segue = segue as? AnimatedSettable {
                 segue.animated = animated
             }
             
-        case .PresentModallyWithDirection(_, let sizeHandler) :
-            destination.modalPresentationStyle = .Custom
+        case .presentModallyWithDirection(_, let sizeHandler) :
+            destination.modalPresentationStyle = .custom
             destination.transitioningDelegate = transitionDelegate
             if var transitioningDelegate = self.transitionDelegate as? SizeHandlerHasableTransitionDelgate {
                 transitioningDelegate.sizeHandler = sizeHandler
@@ -108,8 +108,8 @@ public struct DSegue {
             
             segue = PresentModallySegue(identifier: nil, source: source, destination: destination)
             
-        case .PresentPopup(let sizeHandler):    // popup 창 류
-            destination.modalPresentationStyle = .Custom
+        case .presentPopup(let sizeHandler):    // popup 창 류
+            destination.modalPresentationStyle = .custom
             destination.transitioningDelegate = transitionDelegate
             if var transitioningDelegate = transitionDelegate as? SizeHandlerHasableTransitionDelgate {
                 transitioningDelegate.sizeHandler = sizeHandler
@@ -117,10 +117,10 @@ public struct DSegue {
             
             segue = PresentModallySegue(identifier: nil, source: source, destination: destination)
             
-        case .PresentAsPopover:
+        case .presentAsPopover:
             segue = PresentAsPopoverSegue(identifier: nil, source: source, destination: destination)
             
-        case .Embed(let containerView):
+        case .embed(let containerView):
             segue = EmbedSegue(identifier: nil, source: source, destination: destination, container: containerView)
         }
         return segue
@@ -129,18 +129,18 @@ public struct DSegue {
     public func perform() {
         performWithTarget(nil, sender: nil)
     }
-    public func performWithSender(sender: AnyObject?) {
+    public func performWithSender(_ sender: AnyObject?) {
         performWithTarget(nil, sender: sender)
     }
-    public func performWithTarget(target: UIViewController?, sender: AnyObject? = nil) {
+    public func performWithTarget(_ target: UIViewController?, sender: AnyObject? = nil) {
         let destination = self.destination()
         let style = self.style()
         if let segue = getSegue(destination, style: style) {
             // prepareForSegue 호출 (sender 가 있으면 sender 로 없으면 source 로)
             if let target = target {
-                target.prepareForSegue(segue, sender: sender)
+                target.prepare(for: segue, sender: sender)
             } else {
-                source.prepareForSegue(segue, sender: sender)
+                source.prepare(for: segue, sender: sender)
             }
             segue.perform()
         }
@@ -156,8 +156,8 @@ final class ShowSegue: UIStoryboardSegue, AnimatedSettable {
     }
     
     override func perform() {
-        if let navi = sourceViewController.navigationController {
-            navi.pushViewController(destinationViewController, animated: animated)
+        if let navi = source.navigationController {
+            navi.pushViewController(destination, animated: animated)
             // hack for swife back (when backbutton changed), back 버튼이 들어가면 swife 뒤로가기가 안되는 문제가 있어서 그것 해결
             // TODO: - xcode7 다시 확인해야함 - navi.interactivePopGestureRecognizer.delegate = navi as? UIGestureRecognizerDelegate
         }
@@ -167,10 +167,10 @@ final class ShowSegue: UIStoryboardSegue, AnimatedSettable {
 final class ShowDetailSegue: UIStoryboardSegue, AnimatedSettable {
     var animated: Bool = true
     override func perform() {
-        if let navi = sourceViewController.navigationController {
+        if let navi = source.navigationController {
             let cnt = navi.viewControllers.count
             var controllers = Array(navi.viewControllers[0..<(cnt-1)])
-            controllers.append(destinationViewController)
+            controllers.append(destination)
             navi.setViewControllers(controllers, animated: animated)
         }
     }
@@ -179,35 +179,35 @@ final class ShowDetailSegue: UIStoryboardSegue, AnimatedSettable {
 final class PresentModallySegue: UIStoryboardSegue, AnimatedSettable {
     var animated: Bool = true
     override func perform() {
-        sourceViewController.presentViewController(destinationViewController, animated: animated, completion: nil)
+        source.present(destination, animated: animated, completion: nil)
     }
 }
 
 final class PresentAsPopoverSegue: UIStoryboardSegue, UIPopoverPresentationControllerDelegate {
     override func perform() {
-        destinationViewController.modalPresentationStyle = UIModalPresentationStyle.Popover
-        destinationViewController.preferredContentSize = CGSizeMake(100, 100)
-        if let popoverVC = destinationViewController.popoverPresentationController {
+        destination.modalPresentationStyle = UIModalPresentationStyle.popover
+        destination.preferredContentSize = CGSize(width: 100, height: 100)
+        if let popoverVC = destination.popoverPresentationController {
             popoverVC.permittedArrowDirections = UIPopoverArrowDirection()
             popoverVC.delegate = self
-            popoverVC.sourceView = sourceViewController.view
+            popoverVC.sourceView = source.view
             popoverVC.sourceRect = CGRect(x: 100.0, y: 100.0, width: 1, height: 1)
         }
-        sourceViewController.presentViewController(destinationViewController, animated: true, completion: nil)
+        source.present(destination, animated: true, completion: nil)
     }
     
     // popoverVC.delegate
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
-    func popoverPresentationControllerShouldDismissPopover(popoverPresentationController: UIPopoverPresentationController) -> Bool {
+    func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         return true
     }
 }
 
 final class EmbedSegue: UIStoryboardSegue {
     
-    private weak var containerView: UIView?
+    fileprivate weak var containerView: UIView?
     
     init(identifier: String?, source: UIViewController, destination: UIViewController, container: UIView?) {
         super.init(identifier: identifier, source: source, destination: destination)
@@ -220,17 +220,17 @@ final class EmbedSegue: UIStoryboardSegue {
         containerView?.subviews.forEach({ (v) -> () in
             v.removeFromSuperview()
         })
-        sourceViewController.childViewControllers.forEach { (vc) -> () in
+        source.childViewControllers.forEach { (vc) -> () in
             vc.removeFromParentViewController()
         }
         
-        sourceViewController.addChildViewController(destinationViewController)
-        containerView?.addSubview(destinationViewController.view)
-        destinationViewController.didMoveToParentViewController(sourceViewController)
+        source.addChildViewController(destination)
+        containerView?.addSubview(destination.view)
+        destination.didMove(toParentViewController: source)
         
         // fill
         let fillConsts = DConstraintsBuilder()
-            .addView(destinationViewController.view, name: "parentview")
+            .addView(destination.view, name: "parentview")
             .addVFS("V:|[parentview]|")
             .addVFS("H:|[parentview]|")
             .constraints

@@ -11,10 +11,10 @@ import RxDobby
 
 class ExamListViewController: UITableViewController {
 
-    @IBAction func lmenu(sender: AnyObject) {
+    @IBAction func lmenu(_ sender: AnyObject) {
     }
     
-    @IBAction func rmenu(sender: AnyObject) {
+    @IBAction func rmenu(_ sender: AnyObject) {
         
         DSegue(
             source: self,
@@ -23,8 +23,8 @@ class ExamListViewController: UITableViewController {
                 return menuvc
             },
             style: {
-                DSegueStyle.PresentModallyWithDirection(.RightToLeft) { (parentSize: CGSize) -> CGSize in
-                    return CGSizeMake(300.0, parentSize.height)
+                DSegueStyle.presentModallyWithDirection(.rightToLeft) { (parentSize: CGSize) -> CGSize in
+                    return CGSize(width: 300.0, height: parentSize.height)
                 }
         }).perform()
     }
@@ -46,12 +46,12 @@ class ExamListViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }

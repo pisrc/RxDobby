@@ -12,23 +12,23 @@ import Foundation
 final class LeftToRightSlideOverTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate, SizeHandlerHasableTransitionDelgate, PresentationControllerPositionDelegate, AnimatedTransitioningPositionDelegate {
     
     // presentationview 의 size 를 정의 합니다.
-    var sizeHandler: ((parentSize: CGSize) -> CGSize)?
+    var sizeHandler: ((_ parentSize: CGSize) -> CGSize)?
     
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-        let presentationController = PresentationController(presentedViewController: presented, presentingViewController: presenting)
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        let presentationController = PresentationController(presentedViewController: presented, presenting: presenting)
         presentationController.sizeHandler = self.sizeHandler
         presentationController.positionDelegate = self
         return presentationController
     }
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animationController = AnimatedTransitioning()
         animationController.isPresentation = true
         animationController.positionDelegate = self
         return animationController
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animationController = AnimatedTransitioning()
         animationController.isPresentation = false
         animationController.positionDelegate = self
@@ -37,11 +37,11 @@ final class LeftToRightSlideOverTransitionDelegate: NSObject, UIViewControllerTr
     
     // MARK: - PresentationControllerPositionDelegate, AnimatedTransitioningPositionDelegate
     
-    func positionForPresentedView(containerRect: CGRect, presentedRect: CGRect) -> CGPoint {
-        return CGPointMake(0, 0)
+    func positionForPresentedView(_ containerRect: CGRect, presentedRect: CGRect) -> CGPoint {
+        return CGPoint(x: 0, y: 0)
     }
     
-    func initialUpperViewPosition(finalFrameForUpper: CGRect) -> CGPoint {
+    func initialUpperViewPosition(_ finalFrameForUpper: CGRect) -> CGPoint {
         // 애니메이션 되기전에 시작 포인트 결정 (좌측 화면밖에서 시작하자)
         var point = finalFrameForUpper.origin
         point.x = -finalFrameForUpper.size.width
@@ -54,23 +54,23 @@ final class LeftToRightSlideOverTransitionDelegate: NSObject, UIViewControllerTr
 final class RightToLeftSlideOverTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate, SizeHandlerHasableTransitionDelgate, PresentationControllerPositionDelegate, AnimatedTransitioningPositionDelegate {
     
     // presentationview 의 size 를 정의 합니다.
-    var sizeHandler: ((parentSize: CGSize) -> CGSize)?
+    var sizeHandler: ((_ parentSize: CGSize) -> CGSize)?
     
-    func presentationControllerForPresentedViewController(presented: UIViewController, presentingViewController presenting: UIViewController, sourceViewController source: UIViewController) -> UIPresentationController? {
-        let presentationController = PresentationController(presentedViewController: presented, presentingViewController: presenting)
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        let presentationController = PresentationController(presentedViewController: presented, presenting: presenting)
         presentationController.sizeHandler = self.sizeHandler
         presentationController.positionDelegate = self
         return presentationController
     }
     
-    func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animationController = AnimatedTransitioning()
         animationController.isPresentation = true
         animationController.positionDelegate = self
         return animationController
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         let animationController = AnimatedTransitioning()
         animationController.isPresentation = false
         animationController.positionDelegate = self
@@ -79,13 +79,13 @@ final class RightToLeftSlideOverTransitionDelegate: NSObject, UIViewControllerTr
     
     // MARK: - PresentationControllerPositionDelegate, AnimatedTransitioningPositionDelegate
     
-    func positionForPresentedView(containerRect: CGRect, presentedRect: CGRect) -> CGPoint {
+    func positionForPresentedView(_ containerRect: CGRect, presentedRect: CGRect) -> CGPoint {
         let x = containerRect.size.width - presentedRect.size.width
         let y = containerRect.size.height - presentedRect.size.height
         return CGPoint(x: x, y: y)
     }
     
-    func initialUpperViewPosition(finalFrameForUpper: CGRect) -> CGPoint {
+    func initialUpperViewPosition(_ finalFrameForUpper: CGRect) -> CGPoint {
         // 애니메이션 되기전에 시작 포인트 결정 (좌측 화면밖에서 시작하자)
         var point = finalFrameForUpper.origin
         point.x += finalFrameForUpper.size.width
@@ -98,10 +98,10 @@ final class RightToLeftSlideOverTransitionDelegate: NSObject, UIViewControllerTr
 final class PresentationController: UIPresentationController, UIAdaptivePresentationControllerDelegate {
     var chromeView: UIView = UIView()   // 배경을 반투명하게 가리는 검정 배경
     var positionDelegate: PresentationControllerPositionDelegate?
-    var sizeHandler: ((parentSize: CGSize) -> CGSize)?
+    var sizeHandler: ((_ parentSize: CGSize) -> CGSize)?
     
-    override init(presentedViewController: UIViewController, presentingViewController: UIViewController) {
-        super.init(presentedViewController: presentedViewController, presentingViewController: presentingViewController)
+    override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         
         chromeView.backgroundColor = UIColor(white: 0.0, alpha: 0.4)
         chromeView.alpha = 0.0
@@ -109,25 +109,25 @@ final class PresentationController: UIPresentationController, UIAdaptivePresenta
             UITapGestureRecognizer(target: self, action: #selector(PresentationController.chromeViewTapped(_:))))
     }
     
-    func chromeViewTapped(gesture: UIGestureRecognizer) {
-        if(gesture.state == UIGestureRecognizerState.Ended) {
-            presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+    func chromeViewTapped(_ gesture: UIGestureRecognizer) {
+        if(gesture.state == UIGestureRecognizerState.ended) {
+            presentingViewController.dismiss(animated: true, completion: nil)
         }
     }
     
-    override func sizeForChildContentContainer(container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
+    override func size(forChildContentContainer container: UIContentContainer, withParentContainerSize parentSize: CGSize) -> CGSize {
         // 기본적으로는 화면의 33% 할당, sizeHandler 지정되면 handler 에서 지정한 size 로 설정
         if let handler = self.sizeHandler {
-            return handler(parentSize: parentSize)
+            return handler(parentSize)
         }
         let width = parentSize.width / 3.0
-        return CGSizeMake(width, parentSize.height)
+        return CGSize(width: width, height: parentSize.height)
     }
     
-    override func frameOfPresentedViewInContainerView() -> CGRect {
-        var presentedViewFrame = CGRectZero
+    override var frameOfPresentedViewInContainerView : CGRect {
+        var presentedViewFrame = CGRect.zero
         if let containerBounds = containerView?.bounds {
-            presentedViewFrame.size = self.sizeForChildContentContainer(self.presentedViewController, withParentContainerSize: containerBounds.size)
+            presentedViewFrame.size = self.size(forChildContentContainer: self.presentedViewController, withParentContainerSize: containerBounds.size)
             if let positionDelegate = self.positionDelegate {
                 presentedViewFrame.origin = positionDelegate.positionForPresentedView(containerBounds, presentedRect: presentedViewFrame)
             }
@@ -139,9 +139,9 @@ final class PresentationController: UIPresentationController, UIAdaptivePresenta
         if let containerView = self.containerView {
             chromeView.frame = containerView.bounds
             chromeView.alpha = 0.0
-            containerView.insertSubview(chromeView, atIndex: 0)
-            if let coordinator = presentedViewController.transitionCoordinator() {
-                coordinator.animateAlongsideTransition({ (context: UIViewControllerTransitionCoordinatorContext!) -> Void in
+            containerView.insertSubview(chromeView, at: 0)
+            if let coordinator = presentedViewController.transitionCoordinator {
+                coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext!) -> Void in
                     self.chromeView.alpha = 1.0
                     }, completion: nil)
             } else {
@@ -151,8 +151,8 @@ final class PresentationController: UIPresentationController, UIAdaptivePresenta
     }
     
     override func dismissalTransitionWillBegin() {
-        if let coordinator = presentedViewController.transitionCoordinator() {
-            coordinator.animateAlongsideTransition({ (context: UIViewControllerTransitionCoordinatorContext!) -> Void in
+        if let coordinator = presentedViewController.transitionCoordinator {
+            coordinator.animate(alongsideTransition: { (context: UIViewControllerTransitionCoordinatorContext!) -> Void in
                 self.chromeView.alpha = 0.0
                 }, completion: nil)
         } else {
@@ -164,15 +164,15 @@ final class PresentationController: UIPresentationController, UIAdaptivePresenta
         if let bounds = containerView?.bounds {
             chromeView.frame = bounds
         }
-        presentedView()?.frame = self.frameOfPresentedViewInContainerView()
+        presentedView?.frame = self.frameOfPresentedViewInContainerView
     }
     
-    override func shouldPresentInFullscreen() -> Bool {
+    override var shouldPresentInFullscreen : Bool {
         return true
     }
     
-    override func adaptivePresentationStyle() -> UIModalPresentationStyle {
-        return UIModalPresentationStyle.FullScreen
+    override var adaptivePresentationStyle : UIModalPresentationStyle {
+        return UIModalPresentationStyle.fullScreen
     }
 }
 
@@ -181,21 +181,21 @@ final class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioni
     var isPresentation = false
     var positionDelegate: AnimatedTransitioningPositionDelegate?
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.5
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let fromVC = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)   // 밑에 깔리는 vc
-        let toVC = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)   // 나타날 vc
-        let containerView = transitionContext.containerView()
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)   // 밑에 깔리는 vc
+        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)   // 나타날 vc
+        let containerView = transitionContext.containerView
         
         if let upperVC = self.isPresentation ? toVC : fromVC {
             let upperView = upperVC.view
             if self.isPresentation {
-                containerView?.addSubview(upperView)
+                containerView.addSubview(upperView!)
             }
-            let finalFrameForUpperVC = transitionContext.finalFrameForViewController(upperVC)
+            let finalFrameForUpperVC = transitionContext.finalFrame(for: upperVC)
             var initialFrameForUpperVC = finalFrameForUpperVC
             if let positionDelegate = self.positionDelegate {
                 initialFrameForUpperVC.origin = positionDelegate.initialUpperViewPosition(finalFrameForUpperVC)
@@ -204,18 +204,18 @@ final class AnimatedTransitioning: NSObject, UIViewControllerAnimatedTransitioni
             let initialFrameForUpper = isPresentation ? initialFrameForUpperVC : finalFrameForUpperVC
             let finalFrameForUpper = isPresentation ? finalFrameForUpperVC : initialFrameForUpperVC
             
-            upperView.frame = initialFrameForUpper
-            UIView.animateWithDuration(transitionDuration(transitionContext),
+            upperView?.frame = initialFrameForUpper
+            UIView.animate(withDuration: transitionDuration(using: transitionContext),
                 delay: 0,
                 usingSpringWithDamping: 300.0,
                 initialSpringVelocity: 5.0,
-                options: UIViewAnimationOptions.AllowUserInteraction,
+                options: UIViewAnimationOptions.allowUserInteraction,
                 animations: { () -> Void in
-                    upperView.frame = finalFrameForUpper
+                    upperView?.frame = finalFrameForUpper
                 },
                 completion: { (value: Bool) -> Void in
                     if !self.isPresentation {
-                        upperView.removeFromSuperview()
+                        upperView?.removeFromSuperview()
                     }
                     transitionContext.completeTransition(true)
             })

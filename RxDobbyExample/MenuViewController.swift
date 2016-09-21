@@ -38,19 +38,19 @@ class MenuViewController: UIViewController {
     weak var centerViewController: UIViewController?
     var oldXPostion: CGFloat = 0.0
     
-    func viewPanned(recognizer: UIPanGestureRecognizer) {
+    func viewPanned(_ recognizer: UIPanGestureRecognizer) {
         
         guard let centerViewController = centerViewController else {
             return
         }
         
-        let leftToRight = (recognizer.velocityInView(view).x > 0)
+        let leftToRight = (recognizer.velocity(in: view).x > 0)
         switch recognizer.state {
-        case .Began:
+        case .began:
             oldXPostion = view.frame.origin.x
-        case .Changed:
-            let deltaX = recognizer.translationInView(view).x
-            recognizer.setTranslation(CGPointZero, inView: view)
+        case .changed:
+            let deltaX = recognizer.translation(in: view).x
+            recognizer.setTranslation(CGPoint.zero, in: view)
             
             if view.frame.origin.x + deltaX > centerViewController.view.frame.width {
                 break
@@ -61,16 +61,16 @@ class MenuViewController: UIViewController {
             }
             
             view.frame.origin.x = view.frame.origin.x + deltaX
-        case .Ended:
+        case .ended:
             if leftToRight {
-                dismissViewControllerAnimated(true, completion: nil)
+                dismiss(animated: true, completion: nil)
             } else {
                 // 처음 위치로 되돌아감
-                UIView.animateWithDuration(0.5,
+                UIView.animate(withDuration: 0.5,
                                            delay: 0,
                                            usingSpringWithDamping: 1.0,
                                            initialSpringVelocity: 0,
-                                           options: .CurveEaseInOut,
+                                           options: UIViewAnimationOptions(),
                                            animations: {
                                             self.view.frame.origin.x = self.oldXPostion
                     },
