@@ -41,7 +41,7 @@ Pod::Spec.new do |s|
   #
 
   #s.license      = "MIT (example)"
-  s.license      = { :type => "GNU", :file => "LICENSE" }
+  s.license      = { :type => "MIT", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -92,12 +92,9 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.dependency 'RxSwift', '~> 3.0.0-beta.1'
-
+  s.source_files = "RxDobby/**/*.{swift}"
   #s.source_files  = "Classes", "Classes/**/*.{h,m}"
   #s.exclude_files = "Classes/Exclude"
-  s.source_files = "RxDobby/**/*.{swift}"
-  s.exclude_files = "RxSwift/**"
 
   # s.public_header_files = "Classes/**/*.h"
 
@@ -139,5 +136,6 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"
+  s.dependency 'RxSwift', '~> 3.0.0-beta.1'
 
 end
