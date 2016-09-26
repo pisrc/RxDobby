@@ -16,7 +16,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        
+        // CoreData test
+        
+        if let entity = managedObjectContext.select(forEntityName: "TestEntity") as? TestEntity {
+            print("int32Field: \(entity.int32Field), stringField: \(entity.stringField)")
+        } else {
+            // 없으면 insert
+            let added = managedObjectContext.insert { (entity: TestEntity) in
+                entity.int32Field = 100
+                entity.stringField = "테스트 데이터"
+            }
+            managedObjectContext.doSave()
+            print("-added---------")
+            print(added)
+        }
+
         return true
     }
 

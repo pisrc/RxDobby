@@ -31,6 +31,7 @@
 		94E4DAD31D7FE8630092440F /* RxDobby.h in Headers */ = {isa = PBXBuildFile; fileRef = 94E4DAD21D7FE8630092440F /* RxDobby.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		94E4DADA1D7FE8630092440F /* RxDobby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94E4DACF1D7FE8630092440F /* RxDobby.framework */; };
 		94E4DADF1D7FE8630092440F /* RxDobbyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E4DADE1D7FE8630092440F /* RxDobbyTests.swift */; };
+		94FC3C2B1D98FD4500A71451 /* TestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FC3C2A1D98FD4500A71451 /* TestEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -211,6 +212,7 @@
 		94E4DAD91D7FE8630092440F /* RxDobbyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxDobbyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94E4DADE1D7FE8630092440F /* RxDobbyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDobbyTests.swift; sourceTree = "<group>"; };
 		94E4DAE01D7FE8630092440F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		94FC3C2A1D98FD4500A71451 /* TestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 			isa = PBXGroup;
 			children = (
 				949F94861D814AC40024082D /* extension */,
+				94FC3C151D98FC0100A71451 /* coredata */,
 				9445916D1D7FEAA700CE9038 /* AppDelegate.swift */,
 				949F94811D8147B30024082D /* ExamListViewController.swift */,
 				9445916F1D7FEAA700CE9038 /* ViewController.swift */,
@@ -372,6 +375,14 @@
 				94E4DAE01D7FE8630092440F /* Info.plist */,
 			);
 			path = RxDobbyTests;
+			sourceTree = "<group>";
+		};
+		94FC3C151D98FC0100A71451 /* coredata */ = {
+			isa = PBXGroup;
+			children = (
+				94FC3C2A1D98FD4500A71451 /* TestEntity.swift */,
+			);
+			path = coredata;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -669,6 +680,7 @@
 				949F948A1D814B2B0024082D /* MenuViewController.swift in Sources */,
 				949F94821D8147B30024082D /* ExamListViewController.swift in Sources */,
 				944591701D7FEAA700CE9038 /* ViewController.swift in Sources */,
+				94FC3C2B1D98FD4500A71451 /* TestEntity.swift in Sources */,
 				949F94881D814ACE0024082D /* UIViewController+Extension.swift in Sources */,
 				9445916E1D7FEAA700CE9038 /* AppDelegate.swift in Sources */,
 			);

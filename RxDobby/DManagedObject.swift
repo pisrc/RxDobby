@@ -4,21 +4,18 @@ import CoreData
 
 // MARK: - NSManagedObjectContext 확장
 
-public protocol DManagedObjectContext {
-}
-
-extension DManagedObjectContext where Self: NSManagedObjectContext {
+extension NSManagedObjectContext {
     
-    public func insertNewObject<EntityType:NSManagedObject>(_ newObject: (EntityType) -> EntityType) -> EntityType {
-        
-        let entityName = String(describing: EntityType.self)
-        guard let obj = NSEntityDescription.insertNewObject(forEntityName: entityName, into: self) as? EntityType else {
-            fatalError("Type casting error. (\(EntityType.self))")
+    public func insert<E:NSManagedObject>(makeEntity: (E) -> Void) -> E {
+        let entityName = String(describing: E.self)
+        guard let entity = NSEntityDescription.insertNewObject(forEntityName: entityName, into: self) as? E else {
+            fatalError("Type casting error. (\(E.self))")
         }
-        return newObject(obj)
+        makeEntity(entity)
+        return entity
     }
     
-    public func selectAllForEntity(_ entityName: String, predicate: NSPredicate?) -> [AnyObject] {
+    public func selectAll(forEntityName entityName: String, predicate: NSPredicate?) -> [AnyObject] {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         if let predicate = predicate {
             request.predicate = predicate
@@ -30,13 +27,13 @@ extension DManagedObjectContext where Self: NSManagedObjectContext {
         }
     }
     
-    public func selectForEntity(_ entityName: String) -> AnyObject? {
-        let records = selectAllForEntity(entityName, predicate: nil)
+    public func select(forEntityName entityName: String) -> AnyObject? {
+        let records = selectAll(forEntityName: entityName, predicate: nil)
         return records.first
     }
     
-    public func selectForEntity(_ entityName: String, predicate: NSPredicate) -> AnyObject? {
-        let records = selectAllForEntity(entityName, predicate: predicate)
+    public func select(forEntityName entityName: String, predicate: NSPredicate) -> AnyObject? {
+        let records = selectAll(forEntityName: entityName, predicate: predicate)
         return records.first
     }
     
