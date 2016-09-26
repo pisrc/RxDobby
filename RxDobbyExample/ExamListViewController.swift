@@ -12,6 +12,18 @@ import RxDobby
 class ExamListViewController: UITableViewController {
 
     @IBAction func lmenu(_ sender: AnyObject) {
+        
+        DSegue(
+            source: self,
+            destination: { () -> UIViewController in
+                let menuvc = UIViewController.viewControllerFromStoryboard(name: "Main", identifier: "Menu") as! MenuViewController
+                return menuvc
+            },
+            style: {
+                DSegueStyle.presentModallyWithDirection(.leftToRight) { (parentSize: CGSize) -> CGSize in
+                    return CGSize(width: 300.0, height: parentSize.height)
+                }
+        }).perform()
     }
     
     @IBAction func rmenu(_ sender: AnyObject) {
@@ -42,6 +54,12 @@ class ExamListViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? MenuViewController {
+            dest.centerViewController = self
+        }
     }
 
     // MARK: - Table view data source
@@ -101,14 +119,5 @@ class ExamListViewController: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

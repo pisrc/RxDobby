@@ -15,7 +15,7 @@ class MenuViewController: UIViewController {
 
         
         view.addGestureRecognizer(
-            UIPanGestureRecognizer(target: self, action: #selector(MenuViewController.viewPanned(_:))))
+            UIPanGestureRecognizer(target: self, action: #selector(MenuViewController.viewPannedLeft(_:))))
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,7 +38,7 @@ class MenuViewController: UIViewController {
     weak var centerViewController: UIViewController?
     var oldXPostion: CGFloat = 0.0
     
-    func viewPanned(_ recognizer: UIPanGestureRecognizer) {
+    func viewPannedRight(_ recognizer: UIPanGestureRecognizer) {
         
         guard let centerViewController = centerViewController else {
             return
@@ -75,6 +75,47 @@ class MenuViewController: UIViewController {
                                             self.view.frame.origin.x = self.oldXPostion
                     },
                                            completion: nil)
+                
+            }
+        default:
+            break
+        }
+    }
+
+    
+    func viewPannedLeft(_ recognizer: UIPanGestureRecognizer) {
+        
+        let rightToLeft = (recognizer.velocity(in: view).x < 0)
+        switch recognizer.state {
+        case .began:
+            oldXPostion = view.frame.origin.x
+        case .changed:
+            let deltaX = recognizer.translation(in: view).x
+            recognizer.setTranslation(CGPoint.zero, in: view)
+            
+            if 0 < view.frame.origin.x + deltaX {
+                break
+            }
+            
+            if view.frame.origin.x + view.frame.width + deltaX < 0 {
+                break
+            }
+            
+            view.frame.origin.x = view.frame.origin.x + deltaX
+        case .ended:
+            if rightToLeft {
+                dismiss(animated: true, completion: nil)
+            } else {
+                // 처음 위치로 되돌아감
+                UIView.animate(withDuration: 0.5,
+                               delay: 0,
+                               usingSpringWithDamping: 1.0,
+                               initialSpringVelocity: 0,
+                               options: UIViewAnimationOptions(),
+                               animations: {
+                                self.view.frame.origin.x = self.oldXPostion
+                    },
+                               completion: nil)
                 
             }
         default:
